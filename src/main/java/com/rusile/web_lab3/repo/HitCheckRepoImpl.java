@@ -26,25 +26,18 @@ public class HitCheckRepoImpl implements HitCheckRepo {
         } catch (ClassNotFoundException e) {
             System.out.println("No DB driver!");
             System.exit(1);
-        } catch (SQLException e) {
-            System.out.println("Error occurred during initializing tables!" + e.getMessage());
-            System.exit(1);
         }
     }
 
     @Override
     public void deleteAll(String id) {
-        try {
-            Connection connection = DriverManager.getConnection(dbUrl, user, pass);
-
+        try (Connection connection = DriverManager.getConnection(dbUrl, user, pass)) {
 
             Statement statement = connection.createStatement();
 
             statement.execute("DELETE FROM user_table WHERE " +
-                    "session_id = " + "'" +id +  "'" +
+                    "session_id = " + "'" + id + "'" +
                     ";");
-
-            connection.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -52,9 +45,7 @@ public class HitCheckRepoImpl implements HitCheckRepo {
 
     @Override
     public void save(String id, HitCheck hitCheck) {
-        try {
-            Connection connection = DriverManager.getConnection(dbUrl, user, pass);
-
+        try (Connection connection = DriverManager.getConnection(dbUrl, user, pass)) {
 
             Statement statement = connection.createStatement();
 
@@ -66,10 +57,9 @@ public class HitCheckRepoImpl implements HitCheckRepo {
                     hitCheck.isInArea() + "," +
                     hitCheck.getExecutionTime() + "," +
                     "TO_TIMESTAMP('" + hitCheck.getStartTime().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss")) + "', 'MM/dd/yyyy HH:mi:ss')" + "," +
-                            "'" +id +  "'" +
+                    "'" + id + "'" +
                     ");");
 
-            connection.close();
         } catch (SQLException e) {
             System.out.println(hitCheck.getStartTime().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss")));
             System.out.println(e.getMessage());
@@ -80,10 +70,10 @@ public class HitCheckRepoImpl implements HitCheckRepo {
     @Override
     public List<HitCheck> getAllResults(String id) {
         List<HitCheck> result = new ArrayList<>();
-        try {
-            Connection connection = DriverManager.getConnection(dbUrl, user, pass);
+        try (Connection connection = DriverManager.getConnection(dbUrl, user, pass)) {
 
-            String selectCollectionQuery = "SELECT * FROM user_table where session_id = " + "'" +id +  "'" + ";";
+
+            String selectCollectionQuery = "SELECT * FROM user_table where session_id = " + "'" + id + "'" + ";";
             Statement statement = connection.createStatement();
             ResultSet collectionSet = statement.executeQuery(selectCollectionQuery);
             while (collectionSet.next()) {
@@ -103,25 +93,26 @@ public class HitCheckRepoImpl implements HitCheckRepo {
         return result;
     }
 
-    private void initializeDB() throws SQLException {
+    private void initializeDB() {
 
-        Connection connection = DriverManager.getConnection(dbUrl, user, pass);
+        try (Connection connection = DriverManager.getConnection(dbUrl, user, pass)) {
+            Statement statement = connection.createStatement();
 
-        Statement statement = connection.createStatement();
-
-        statement.execute("CREATE TABLE IF NOT EXISTS user_table" +
-                "(" +
-                "id serial PRIMARY KEY," +
-                "x double precision," +
-                "y double precision," +
-                "r double precision," +
-                "inArea boolean," +
-                "script_time bigint," +
-                "time timestamp," +
-                "session_id varchar(500)" +
-                ");"
-        );
-
-        connection.close();
+            statement.execute("CREATE TABLE IF NOT EXISTS user_table" +
+                    "(" +
+                    "id serial PRIMARY KEY," +
+                    "x double precision," +
+                    "y double precision," +
+                    "r double precision," +
+                    "inArea boolean," +
+                    "script_time bigint," +
+                    "time timestamp," +
+                    "session_id varchar(500)" +
+                    ");"
+            );
+        } catch (SQLException e) {
+            System.out.println("Error occurred during initializing tables!" + e.getMessage());
+            System.exit(1);
+        }
     }
 }
