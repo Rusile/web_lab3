@@ -1,0 +1,23 @@
+.graph {
+    float: left;
+    margin-top: 12%;
+    margin-left: 5%;
+
+}
+
+.graph:hover {
+    cursor: crosshair;
+}
+.graph line, polygon, path {
+    stroke: black;
+    fill: var(--blue);
+    opacity: 0.6;
+}
+
+svg .green {
+    fill: #569E76;
+}
+
+svg .red {
+    fill: #B15E79;
+}

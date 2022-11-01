@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+    <meta charset="UTF-8"/>
+    <title>Web Lab 3</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"/>
+    <link href="css/graph.css" rel="stylesheet"/>
+    <link href="css/input.css" rel="stylesheet"/>
+    <link href="css/table.css" rel="stylesheet"/>
+    <link href="css/main.css" rel="stylesheet"/>
+</h:head>
+<body>
+
+<header class="author">
+    <p>Rusile | P32081 | 32342</p>
+</header>
+
+
+<main>
+        <h:panelGroup layout="block" id="graph" class="graph">
+            <ui:include src="graph.xhtml"/>
+        </h:panelGroup>
+
+<!--    <div class="graph">-->
+<!--        <ui:include src="resources/graph.xhtml"/>-->
+<!--    </div>-->
+
+    <div class="input_wrapper">
+        <h:form id="form" name="form" >
+            <div class="x_wrapper">
+                <h:outputLabel for="x_value" value="Choose X:"/>
+                <h:selectOneMenu id="x_value" value="#{hitCheck.x}" required="true"
+                                 requiredMessage="X value is required" validator="#{hitCheck.validateX}">
+                    <f:selectItem itemLabel="-5" itemValue="-5"/>
+                    <f:selectItem itemLabel="-4" itemValue="-4"/>
+                    <f:selectItem itemLabel="-3" itemValue="-3"/>
+                    <f:selectItem itemLabel="-2" itemValue="-2"/>
+                    <f:selectItem itemLabel="-1" itemValue="-1"/>
+                    <f:selectItem itemLabel="0" itemValue="0"/>
+                    <f:selectItem itemLabel="1" itemValue="1"/>
+                    <f:selectItem itemLabel="2" itemValue="2"/>
+                    <f:selectItem itemLabel="3" itemValue="3"/>
+                </h:selectOneMenu>
+            </div>
+
+            <div class="y_wrapper">
+                <label>Choose Y:</label>
+                <h:inputText id="y_value" name="y_value" value="#{hitCheck.y}" required="true"
+                             requiredMessage="Y value is required" validator="#{hitCheck.validateY}"/>
+            </div>
+
+            <div class="r_wrapper">
+                <label>Choose R:</label>
+                <h:inputText id="r_value" name="r_value" value="#{hitCheck.r}" required="true"
+                             requiredMessage="R value is required" validator="#{hitCheck.validateR}"/>
+            </div>
+
+
+            <div class="buttons">
+                <div class="reset_button">
+                    <h:commandButton id="reset" type="button" value="Reset" action="#{table.clear()}"
+                                     onclick="resetInput()">
+                        <f:ajax render="res_table"/>
+                    </h:commandButton>
+                </div>
+                <div class="check_button">
+                    <h:commandButton id="submit_button" value="Check" action="#{hitCheck.saveToTable()}">
+                        <f:ajax execute="r_value y_value x_value" render="res_table graph x_error y_error r_error"/>
+                    </h:commandButton>
+                </div>
+            </div>
+
+            <div class="errors">
+                <h:message for="x_value" style="color: red; font-size: 0.7em" id="x_error"/>
+                <p></p>
+                <h:message for="y_value" style="color: red; font-size: 0.7em" id="y_error"/>
+                <p></p>
+                <h:message for="r_value" style="color: red; font-size: 0.7em" id="r_error"/>
+            </div>
+        </h:form>
+    </div>
+
+    <div class="table_wrapper" style="height: 400px; overflow-x: hidden;
+         overflow-y: auto; display: block">
+        <h:dataTable id="res_table" value="#{table.getAllResults()}" var="hitCheck">
+            <h:column>
+                <f:facet name="header">X</f:facet>
+                #{hitCheck.x}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Y</f:facet>
+                #{hitCheck.y}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">R</f:facet>
+                #{hitCheck.r}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Текущее время</f:facet>
+                <h:outputText value="#{hitCheck.startTime}">
+                    <f:convertDateTime type="zonedDateTime" pattern="yyyy-MM-dd HH:mm:ss"/>
+                </h:outputText>
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Время выполнения</f:facet>
+                #{hitCheck.executionTime}
+            </h:column>
+
+            <h:column>
+                <f:facet name="header">Результат</f:facet>
+                #{hitCheck.inArea}
+            </h:column>
+        </h:dataTable>
+    </div>
+
+
+</main>
+<script src="js/main.js"></script>
+</body>
+</html>

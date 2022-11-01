@@ -1,0 +1,22 @@
+.table_wrapper {
+    float: right;
+    margin-right: 5%;
+    margin-top: 10%;
+}
+
+.table_wrapper table {
+    font-size: 110%;
+    text-align: center;
+    width: 100%;
+    border: 2px solid var(--blue);
+    border-collapse: collapse;
+    color: var(--dark_blue);
+}
+
+
+.table_wrapper table thead tr th {
+
+    border: 2px solid var(--blue);
+    padding: 10px;
+
+}

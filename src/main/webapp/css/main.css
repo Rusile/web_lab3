@@ -1,0 +1,23 @@
+:root {
+    --background_color: #ebedef;
+    --blue: #7ac3ff;
+    --dark_blue: #5482a8;
+}
+
+body {
+    margin: auto;
+    background: var(--background_color);
+    color: var(--blue);
+    bottom: 10%;
+}
+
+header {
+    background: var(--blue);
+    color: white;
+    text-align: right;
+}
+
+
+.author text {
+    font-family: Papyrus;
+}
