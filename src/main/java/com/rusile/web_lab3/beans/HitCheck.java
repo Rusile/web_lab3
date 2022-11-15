@@ -2,8 +2,6 @@ package com.rusile.web_lab3.beans;
 
 import com.rusile.web_lab3.area.AreaChecker;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -12,10 +10,8 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.Instant;
 import java.time.ZonedDateTime;
 
 @ManagedBean
@@ -96,8 +92,8 @@ public class HitCheck {
     }
 
     public String saveToTable() {
-        if (!securityBean.logout().equals(""))
-            return securityBean.logout();
+        if (!securityBean.onload().equals(""))
+            return securityBean.onload();
         roundAllCoordinates();
         inArea = checker.isHit(this);
         executionTime = System.currentTimeMillis() - startTime.toInstant().toEpochMilli();

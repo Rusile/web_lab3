@@ -61,6 +61,7 @@ public class SecurityBean {
             message = "Login exists!";
             return "";
         } else {
+            message = "";
             return "index.xhtml";
         }
     }
@@ -70,6 +71,7 @@ public class SecurityBean {
             message = "Login or password is wrong!";
             return "";
         } else {
+            message = "";
             return "index.xhtml";
         }
     }
