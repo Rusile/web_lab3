@@ -23,6 +23,9 @@ import java.time.ZonedDateTime;
 @Data
 public class HitCheck {
 
+    @ManagedProperty("#{securityBean}")
+    private SecurityBean securityBean;
+
     @ManagedProperty("#{areaCheckerImpl}")
     private AreaChecker checker;
 
@@ -92,10 +95,13 @@ public class HitCheck {
         r = BigDecimal.valueOf(r).setScale(4, RoundingMode.HALF_UP).doubleValue();
     }
 
-    public void saveToTable() {
+    public String saveToTable() {
+        if (!securityBean.logout().equals(""))
+            return securityBean.logout();
         roundAllCoordinates();
         inArea = checker.isHit(this);
         executionTime = System.currentTimeMillis() - startTime.toInstant().toEpochMilli();
         table.addToTable(this);
+        return "";
     }
 }

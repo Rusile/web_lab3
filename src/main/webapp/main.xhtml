@@ -5,7 +5,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:pam="http://example.com/tags">
 <h:head>
     <meta charset="UTF-8"/>
     <title>Web Lab 3</title>
@@ -17,23 +18,29 @@
     <link href="css/main.css" rel="stylesheet"/>
 </h:head>
 <body>
-
-<header class="author">
-    <p>Rusile | P32081 | 32342</p>
+<f:metadata>
+    <f:viewAction action="#{securityBean.onload}"/>
+</f:metadata>
+<header class="header">
+    <div class="author">
+        <p>Rusile | P32081 | 32342</p>
+    </div>
+    <div class="logout">
+        <h:form>
+            <h:commandButton action="#{securityBean.logout}"
+                             value="Logout"></h:commandButton>
+        </h:form>
+    </div>
 </header>
 
 
 <main>
-        <h:panelGroup layout="block" id="graph" class="graph">
-            <ui:include src="graph.xhtml"/>
-        </h:panelGroup>
-
-<!--    <div class="graph">-->
-<!--        <ui:include src="resources/graph.xhtml"/>-->
-<!--    </div>-->
+    <h:panelGroup layout="block" id="graph" class="graph">
+        <ui:include src="graph.xhtml"/>
+    </h:panelGroup>
 
     <div class="input_wrapper">
-        <h:form id="form" name="form" >
+        <h:form id="form" name="form">
             <div class="x_wrapper">
                 <h:outputLabel for="x_value" value="Choose X:"/>
                 <h:selectOneMenu id="x_value" value="#{hitCheck.x}" required="true"

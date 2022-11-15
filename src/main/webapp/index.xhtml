@@ -2,14 +2,27 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:head>
     <link href="css/index.css" rel="stylesheet"></link>
 </h:head>
 <h:body>
-    <header class="author">
-        <p>Rusile | P32081 | 32342</p>
+    <f:metadata>
+        <f:viewAction action="#{securityBean.onload}"/>
+    </f:metadata>
+
+    <header>
+        <div class="author">
+            <p id="author">Rusile | P32081 | 32342</p>
+        </div>
+        <div class="logout">
+            <h:form id="logout">
+                <h:commandButton action="#{securityBean.logout}"
+                                 value="Logout"></h:commandButton>
+            </h:form>
+        </div>
     </header>
     <main>
 

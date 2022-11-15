@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="https://primefaces.org/ui">
+
+<h:head>
+    <title>Authorization</title>
+    <link href="css/login.css" rel="stylesheet"/>
+</h:head>
+<h:body>
+    <div class="input-wrapper">
+        <h:form class="form">
+            <h3>Login Tab</h3>
+            <h:outputText value="Username" id="outputText"/>
+            <h:inputText id="username" value="#{securityBean.login}" required="true"
+                         requiredMessage="Login value is required"
+                         validator="#{securityBean.validateLogin}"></h:inputText>
+            <h:message for="username"></h:message>
+            <br></br><br></br>
+
+            <h:outputText value="Password"/>
+            <h:inputSecret id="password" value="#{securityBean.pwd}" required="true"
+                           requiredMessage="Password value is required"
+                           validator="#{securityBean.validatePassword}"></h:inputSecret>
+            <h:message for="password"></h:message>
+            <br></br><br></br>
+            <div class="buttons">
+                <h:commandButton action="#{securityBean.login}"
+                                                  value="Login" render="error"></h:commandButton>
+                <h:commandButton action="#{securityBean.register}"
+                                 value="Register" render="error"></h:commandButton>
+            </div>
+
+            <p id="error"  style="color: red; font-size: 0.7em">#{securityBean.message}</p>
+        </h:form>
+    </div>
+</h:body>
+</html>

@@ -15,10 +15,12 @@ import java.util.List;
 @ManagedBean
 @ApplicationScoped
 public class HitCheckRepoImpl implements HitCheckRepo {
-    private final String dbUrl = "jdbc:postgresql://pg:5432/studs";
-    private final String user = "s335091";
-    private final String pass = "hf34JQYxZj7ZtojH";
-
+    //private final String dbUrl = "jdbc:postgresql://pg:5432/studs";
+//    private final String user = "s335091";
+//    private final String pass = "hf34JQYxZj7ZtojH";
+    private final String dbUrl ="jdbc:postgresql://localhost:5432/disk_api_db?useSSL=false&amp&serverTimezone=UTC";
+    private final String user = "postgres";
+    private final String pass = "postgres";
     public HitCheckRepoImpl() {
         try {
             Class.forName("org.postgresql.Driver");
@@ -56,7 +58,7 @@ public class HitCheckRepoImpl implements HitCheckRepo {
                     hitCheck.getR() + "," +
                     hitCheck.isInArea() + "," +
                     hitCheck.getExecutionTime() + "," +
-                    "TO_TIMESTAMP('" + hitCheck.getStartTime().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss")) + "', 'MM/dd/yyyy HH:mi:ss')" + "," +
+                    "TO_TIMESTAMP('" + hitCheck.getStartTime().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss")) + "', 'MM/dd/yyyy HH24:mi:ss')" + "," +
                     "'" + id + "'" +
                     ");");
 
@@ -96,6 +98,7 @@ public class HitCheckRepoImpl implements HitCheckRepo {
     private void initializeDB() {
 
         try (Connection connection = DriverManager.getConnection(dbUrl, user, pass)) {
+
             Statement statement = connection.createStatement();
 
             statement.execute("CREATE TABLE IF NOT EXISTS user_table" +

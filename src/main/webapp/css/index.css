@@ -32,3 +32,21 @@ main {
     height: 100%;
     vertical-align: middle;
 }
+/*header {*/
+/*    display: flex;*/
+/*}*/
+.author {
+    justify-content: left;
+}
+
+.logout{
+    justify-content: right;
+}
+/*.logout {*/
+/*    display: flex;*/
+/*    justify-content: right;*/
+/*}*/
+
+/*.author text {*/
+/*    font-family: Papyrus;*/
+/*}*/

@@ -1,0 +1,29 @@
+:root {
+    --background_color: #ebedef;
+    --blue: #7ac3ff;
+    --dark_blue: #5482a8;
+}
+
+.input-wrapper {
+    display: flex;
+    justify-content: center;
+    background: var(--background_color);
+    border: 5px solid var(--blue);
+    border-radius: 20px 20px 20px 20px;
+    margin: 60px 50px 50px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+}
